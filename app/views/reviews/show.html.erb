@@ -1,0 +1,26 @@
+<div class = "col-lg-10">
+  <div class = "card rounded-0 shadow mt-5 mb-5">
+    <div class = "card-body">
+      <p id="notice"><%= notice %></p>
+
+      <p>
+        <strong>Comment:</strong>
+        <%= @review.comment %>
+      </p>
+
+      <p>
+        <strong>Movie</strong>
+        <%= @review.movie.name %>
+      </p>
+
+      <p>
+        <strong>User:</strong>
+        <%= @review.user.email %>
+      </p>
+
+      <%= link_to 'Edit', edit_movie_review_path(@movie, @review), class: "btn btn-success" %> |
+      <%= link_to 'Back to Reviews', movie_reviews_path(@movie), class: "btn btn-success" %>
+
+    </div>
+  </div>
+</div>

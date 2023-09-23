@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+<h1>Search By</h1>
+<%= form_tag(movies_path, method: :get) do %>
+  <%= label_tag(:select_date, "Release Date:") %>
+  <%= text_field_tag(:select_date, params[:select_date], type: "date") %>
+  <%= button_tag("Show movies", type: "submit", class: "btn btn-success") %>
+<% end %><br><br>
+<%= form_tag(movies_path, method: :get) do %>
+  <%= label_tag(:name, "Movie Name:") %>
+  <%= text_field_tag(:name, params[:name], type: "string") %>
+  <%= button_tag("Show movies", type: "submit", class: "btn btn-success") %>
+<% end %><br><br>
+
+<h1>Movies</h1>
+
+<table class = "table-primary table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Release date</th>
+    <th scope="col">Average Rating</th>
+    <th scope="col-2">Options</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @movies.each do |movie| %>
+    <tr>
+      <td><%= movie.name %></td>
+      <td><%= movie.release_date %></td>
+      <td><%= (movie.reviews.average('star') || 0.0).floor(1) %></td>
+      <td>
+        <div class="dropdown">
+        <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Review Options</button>
+        <ul class="dropdown-menu">
+          <li>
+            <% if movie.reviews.any? %>
+              <%= link_to 'View Comments', movie_reviews_path(movie), class: "dropdown-item" %>
+            <% end %>
+          </li>
+          <li><%= link_to 'Post Review', new_movie_review_path(movie, @review), class: "dropdown-item" %></li>
+        </ul>
+      </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+<div>
+  <%= link_to 'New Movie', new_movie_path, class: "btn btn-success" %>
+</div>
+

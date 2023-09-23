@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Reviews for <%= @movie.name %></h1>
+<table class = "table-primary table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Comment</th>
+      <th scope="col">User</th>
+      <th scope="col=3">Options</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reviews.each do |review| %>
+      <tr>
+        <td><%= review.comment %></td>
+        <% if review.user.email.present? %>
+          <td><%= review.user.email %></td>
+        <% else %>
+          <td><%= no user found %></td>
+        <% end %>
+        <td>
+          <div class="dropdown">
+          <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Allowed Actions</button>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'Show', movie_review_path(@movie, review), class: "dropdown-item" %></li>
+            <li>
+              <% if can? :update, review %>
+                <%= link_to 'Edit', edit_movie_review_path(@movie, review), class: "dropdown-item" %>
+              <% end %>
+            </li>
+            <li>
+              <% if can? :destroy, review %>
+                <%= button_to 'Destroy', [@movie, review], method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<div>
+  <%= link_to 'Back to Movies', movies_path(@movie), class: "btn btn-success" %>
+  <%= link_to 'New Review', new_movie_review_path(@movie, @review), class: "btn btn-success" %>
+</div>
+

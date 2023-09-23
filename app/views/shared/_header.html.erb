@@ -1,0 +1,9 @@
+<nav class="navbar bg-success", data-bs-theme = "light">
+  <div class="container-fluid">
+    <a class="navbar-brand btn btn-light" href="/">Movies</a>
+    <a class="navbar-brand">Signed in as : <%= current_user.try(:email) %></a>
+      <% if user_signed_in? %>
+      <%= button_to 'Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+  </div>
+</nav>
